@@ -65,7 +65,7 @@ This repository demonstrates a practical approach to sentiment analysis using re
 
 ### Confusion Matrix
 
-![Posterior Plot](analise_missing_mice_mf_amelia.png)
+![Posterior Plot](matriz-confusao.png)
 
 > The matrix shows balanced performance between classes, with the model achieving ~83% accuracy on unseen tweets.
 
@@ -75,11 +75,11 @@ This repository demonstrates a practical approach to sentiment analysis using re
 
 ### Positive Tweets
 
-![Posterior Plot](analise_missing_mice_mf_amelia.png)
+![Posterior Plot](nuvem-palavras-tweets-positivos.png)
 
 ### Negative Tweets
 
-![Posterior Plot](analise_missing_mice_mf_amelia.png)
+![Posterior Plot](nuvem-palavras-tweets-negativos.png)
 
 ---
 
