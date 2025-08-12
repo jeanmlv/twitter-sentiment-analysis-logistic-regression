@@ -1,99 +1,105 @@
-# Missing Data Imputation — Comparative Analysis in R
+# Twitter Sentiment Analysis — Logistic Regression with TF-IDF
 
-> A reproducible pipeline comparing multiple imputation methods (mice, missForest, and Amelia) using the nhanes dataset, evaluating their impact on statistical relationships such as the correlation between BMI and Age.
+> A reproducible pipeline for sentiment classification of tweets using the Sentiment140 dataset, applying preprocessing, TF-IDF vectorization, and Logistic Regression to distinguish between positive and negative sentiments.
 
 ---
 
 ## 🎯 Objective
 
-This repository demonstrates a practical approach to handling missing data using real-world imputation packages in R. The goal is to:
+This repository demonstrates a practical approach to sentiment analysis using real-world Twitter data. The goal is to:
 
-✔ Explore and visualize missingness patterns
+✔ Load and preprocess a large corpus of tweets
 
-✔ Apply multiple imputation methods and generate complete datasets
+✔ Apply TF-IDF vectorization with unigrams and bigrams
 
-✔ Analyze the effect of imputation on variable correlation
+✔ Train and evaluate a Logistic Regression baseline model
 
-✔ Compare results across imputation strategies
+✔ Visualize classification results with confusion matrices
 
-✔ Automate and organize analysis into modular scripts
+✔ Explore most frequent words in each sentiment class via Word Clouds
 
 ---
 
 ## 🧰 Technologies
 
-- **Language**: R  
+- **Language**: Python  
 - **Core Packages**:  
-  - `mice` – Multivariate Imputation by Chained Equations
-  - `missForest` – Random Forest-based Imputation  
-  - `Amelia` – EM Bootstrap-based Imputation
-  - `VIM` – Missing data visualization  
-  - `dplyr, ggplot2, tidyr` – Data manipulation and plotting
+  - pandas, numpy – Data manipulation
+  - re – Text preprocessing with regular expressions  
+  - scikit-learn – Model training, evaluation, and TF-IDF
+  - matplotlib, seaborn – Visualization 
+  - wordcloud – Word cloud generation
     
 ---
 
 ## 📊 Analysis Workflow
 
 1. **Data Loading**
-   - Load the nhanes dataset from the mice package
-   - Save as .csv for reproducibility
+   - Load the Sentiment140 dataset (1.6M tweets)
+   - Map labels from {0, 4} to {Negative, Positive}
 
-2. **Missing Data Exploration**
-   - Use VIM::aggr() to visualize missingness patterns
-   - Compute summary statistics for affected variables
+2. **Text Preprocessing**
+   - Convert to lowercase
+   - Remove URLs, mentions, punctuation, numbers
+   - Remove extra spaces
 
-3. **Imputation Methods**
-   - mice: Predictive Mean Matching (PMM), 5 imputations
-   - missForest: Nonparametric Random Forest-based imputation
-   - Amelia: EM-based single imputation (m = 1)
+3. **Vectorization**
+   - Apply TF-IDF with:
+     - max_features = 10,000
+     - ngram_range = (1, 2) (unigrams + bigrams)
 
-4. **Post-Imputation Analysis**
-   - Calculate correlation between bmi and age for each imputed dataset
-   - Compare to correlation in original (incomplete) data
-     
+4. **Model Training**
+   - Train a Logistic Regression classifier (max_iter = 100)
+   - Split into training (80%) and testing (20%)
+
+5. **Evaluation**
+   - Compute classification report (Precision, Recall, F1-score)
+   - Plot confusion matrix heatmap
+
+6. **Visualization**
+   - Generate word clouds for positive and negative tweets
+          
 ---
 
 ## 📝 Example Output
 
-### Missing Data Pattern and Imputation Comparison
+### Confusion Matrix
 
 ![Posterior Plot](analise_missing_mice_mf_amelia.png)
 
-> The left panel shows the proportion of missing data per variable in the dataset, while the right panel displays the missingness patterns. Variables like chl, bmi, and hyp present substantial missingness, while age is fully observed.
+> The matrix shows balanced performance between classes, with the model achieving ~83% accuracy on unseen tweets.
 
 ---
 
-# Impact of Imputation on Correlation (BMI vs Age)
+## 📝 Word Cloud Examples
 
-> After applying three different imputation methods, we evaluate how each method affects the correlation between bmi and age:
+### Positive Tweets
 
-| Method       | Correlation |
-|--------------|-------------|
-| Original     | -0.3719     |
-| mice         | -0.3999     |
-| missForest   | -0.4951     |
-| Amelia       | -0.4919     |
+![Posterior Plot](analise_missing_mice_mf_amelia.png)
 
-Note: Imputation methods slightly strengthened the correlation between bmi and age, especially with missForest and Amelia. This reflects how different algorithms infer missing values based on variable relationships.
+### Negative Tweets
+
+![Posterior Plot](analise_missing_mice_mf_amelia.png)
 
 ---
 
 ## 🔄 Possible Extensions
 
-- 📉 Add more evaluation metrics (e.g., RMSE, distributional comparison)
-- 🧠 Visualize variable distributions pre vs. post-imputation
-- 📊 Include dimensionality reduction (e.g., PCA) after imputation
-- 📁 Export results in a report using rmarkdown for reproducibility
-- 🌐 Integrate into a Shiny App for interactive exploration of imputed datasets
+- 🧠 Add deep learning models (e.g., LSTM, BERT) for improved accuracy
+- 📊 Include a "Neutral" sentiment class for finer granularity
+- 📁 Export results and predictions to interactive dashboards
+- 🌐 Integrate with the Twitter API for real-time sentiment analysis
+- 📉 Perform hyperparameter tuning and cross-validation
+
 ---
 
 ## 📚 Use Case
 
 This project is ideal for:
-- Data analysts and scientists learning imputation techniques
-- Students exploring statistical implications of missing data 
-- Researchers validating preprocessing pipelines  
-- Portfolio demonstration of R data cleaning and pipeline automation
+- Data scientists learning NLP preprocessing and modeling
+- Students practicing text classification with real-world data 
+- Researchers building baseline sentiment analysis models 
+- Portfolio demonstration of machine learning pipelines in Python
 
 ---
 
